@@ -6,11 +6,9 @@ import gameAI
 import multiprocessing
 import datetime
 
-letter_codes = [ord(ch) for ch in 'WASDRQwasdrq']
-actions = ['Up', 'Left', 'Down', 'Right', 'Restart', 'Exit']
+letter_codes = [ord(ch) for ch in 'WASDRQHwasdrqh']
+actions = ['Up', 'Left', 'Down', 'Right', 'Restart', 'Exit','Hint']
 actions_dict = dict(zip(letter_codes, actions * 2))
-
-gameai = gameAI.QLearning()
 
 def get_user_action(keyboard):    
     char = "N"
@@ -36,6 +34,7 @@ class GameField(object):
         self.highscore = 0
         self.reset()
         self.ai = gameAI.QLearning()
+        self.flag = False
 
     def reset(self):
         if self.score > self.highscore:
@@ -96,7 +95,7 @@ class GameField(object):
 
     def draw(self, screen):
         help_string1 = '(W)Up (S)Down (A)Left (D)Right'
-        help_string2 = '     (R)Restart (Q)Exit'
+        help_string2 = '   (R)Restart (Q)Exit (H)Hint'
         gameover_string = '           GAME OVER'
         win_string = '          YOU WIN!'
         hint_string= '      Hint:'
@@ -131,8 +130,10 @@ class GameField(object):
                 cast(help_string1)
         cast(help_string2)
 
-        # # hint_action = self.ai.takeAction(self.field)
-        # cast(hint_string+hint_action)
+        if self.flag:
+            self.flag = False
+            hint_action = self.ai.takeAction(self.field)
+            cast(hint_string+hint_action)
 
     def spawn(self):
         new_element = 4 if randrange(100) > 89 else 2
@@ -168,6 +169,7 @@ class GameField(object):
             return False
 
 def main(stdscr):
+
     def init():
         #重置游戏棋盘
         game_field.reset()
@@ -185,21 +187,17 @@ def main(stdscr):
     def game():
         #画出当前棋盘状态
         game_field.draw(stdscr)
-        #读取用户输入得到action
-        # action = get_user_action(stdscr)
         
-        #wait for one second
-        time_point = datetime.datetime.now()+datetime.timedelta(seconds=1)
-        while datetime.datetime.now()<time_point:
-            stdscr.refresh()
-
-        action = get_ai_action(game_field.field)
+        #读取用户输入得到action
+        action = get_user_action(stdscr)
         
         if action == 'Restart':
             return 'Init'
         if action == 'Exit':
             return 'Exit'
-        if game_field.move(action): # move successful
+        if action == 'Hint':
+            game_field.flag = True
+        elif game_field.move(action): # move successful
             if game_field.is_win():
                 return 'Win'
             if game_field.is_gameover():
