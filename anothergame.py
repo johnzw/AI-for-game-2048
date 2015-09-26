@@ -5,6 +5,7 @@ from collections import defaultdict
 import gameAI
 import multiprocessing
 import datetime
+import realGameAI as realAI
 
 letter_codes = [ord(ch) for ch in 'WASDRQHwasdrqh']
 actions = ['Up', 'Left', 'Down', 'Right', 'Restart', 'Exit','Hint']
@@ -33,7 +34,6 @@ class GameField(object):
         self.score = 0
         self.highscore = 0
         self.reset()
-        self.ai = gameAI.QLearning()
         self.flag = False
 
     def reset(self):
@@ -132,7 +132,7 @@ class GameField(object):
 
         if self.flag:
             self.flag = False
-            hint_action = self.ai.takeAction(self.field)
+            hint_action = realAI.makeMove(self.field)
             cast(hint_string+hint_action)
 
     def spawn(self):
@@ -212,7 +212,7 @@ def main(stdscr):
     }
 
     curses.use_default_colors()
-    game_field = GameField(height=2, width=2,win=32)
+    game_field = GameField()
 
     state = 'Init'
 

@@ -5,12 +5,11 @@ from collections import defaultdict
 import gameAI
 import multiprocessing
 import datetime
+import realGameAI as gameai
 
 letter_codes = [ord(ch) for ch in 'WASDRQwasdrq']
 actions = ['Up', 'Left', 'Down', 'Right', 'Restart', 'Exit']
 actions_dict = dict(zip(letter_codes, actions * 2))
-
-gameai = gameAI.QLearning()
 
 def get_user_action(keyboard):    
     char = "N"
@@ -19,7 +18,7 @@ def get_user_action(keyboard):
     return actions_dict[char]
 
 def get_ai_action(field):
-    return gameai.takeAction(field)
+    return gameai.makeMove(field)
 
 def transpose(field):
     return [list(row) for row in zip(*field)]
@@ -189,7 +188,7 @@ def main(stdscr):
         # action = get_user_action(stdscr)
         
         #wait for one second
-        time_point = datetime.datetime.now()+datetime.timedelta(seconds=1)
+        time_point = datetime.datetime.now()+datetime.timedelta(seconds=0.1)
         while datetime.datetime.now()<time_point:
             stdscr.refresh()
 
@@ -214,7 +213,7 @@ def main(stdscr):
     }
 
     curses.use_default_colors()
-    game_field = GameField(height=2, width=2,win=32)
+    game_field = GameField()
 
     state = 'Init'
 
