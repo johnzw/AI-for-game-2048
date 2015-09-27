@@ -9,7 +9,7 @@ def invert(field):
     return [row[::-1] for row in field]
 #game agent
 class GameField(object):
-    def __init__(self, height=4, width=4, win=2048):
+    def __init__(self, height=4, width=4, win=4096):
         self.height = height
         self.width = width
         self.win_value = win

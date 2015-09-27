@@ -41,7 +41,7 @@ class QLearning(object):
 				output += num*(10**(2*i+j))
 		return output
 
-	def takeAction(self, field):
+	def makeMove(self, field):
 		state = self.fieldToState(field)
 		action_num = self.generateAction(state)
 		return actionTranslate[action_num]

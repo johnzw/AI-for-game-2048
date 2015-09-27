@@ -2,10 +2,11 @@
 import curses
 from random import randrange, choice # generate and place new tile
 from collections import defaultdict
-import gameAI
+import gameAI as gameai_22
 import multiprocessing
 import datetime
 import realGameAI as gameai
+import argparse
 
 letter_codes = [ord(ch) for ch in 'WASDRQwasdrq']
 actions = ['Up', 'Left', 'Down', 'Right', 'Restart', 'Exit']
@@ -16,10 +17,6 @@ def get_user_action(keyboard):
     while char not in actions_dict:    
         char = keyboard.getch()
     return actions_dict[char]
-
-def get_ai_action(field):
-    return gameai.makeMove(field)
-
 def transpose(field):
     return [list(row) for row in zip(*field)]
 
@@ -34,8 +31,14 @@ class GameField(object):
         self.score = 0
         self.highscore = 0
         self.reset()
-        self.ai = gameAI.QLearning()
-
+        
+        if height==4 and width ==4:
+            self.ai = gameai.AIagent()
+        else:
+            self.ai = gameai_22.QLearning()
+    
+    def get_ai_action(self, field):
+        return self.ai.makeMove(field)
     def reset(self):
         if self.score > self.highscore:
             self.highscore = self.score
@@ -187,14 +190,14 @@ def main(stdscr):
         #读取用户输入得到action
         # action = get_user_action(stdscr)
         
-        #wait for one second
-        # time_point = datetime.datetime.now()+datetime.timedelta(seconds=0.00001)
-        # while datetime.datetime.now()<time_point:
-            # stdscr.refresh()
+        # wait for one second
+        if game_field.height==2:
+            time_point = datetime.datetime.now()+datetime.timedelta(seconds=0.5)
+            while datetime.datetime.now()<time_point:
+                stdscr.refresh()
 
-        
         stdscr.refresh()
-        action = get_ai_action(game_field.field)
+        action = game_field.get_ai_action(game_field.field)
         
         if action == 'Restart':
             return 'Init'
@@ -214,8 +217,16 @@ def main(stdscr):
             'Game': game
     }
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--real", help="set the game to be authentic 2048 game, instead of game of 2*2 field",action="store_true")
+    args = parser.parse_args()
+
     curses.use_default_colors()
-    game_field = GameField(win=2048)
+
+    if args.real:
+        game_field = GameField(win=2048)
+    else:
+        game_field = GameField(height=2, width=2, win=32)
 
     state = 'Init'
 

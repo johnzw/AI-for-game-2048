@@ -5,7 +5,8 @@ from collections import defaultdict
 import gameAI
 import multiprocessing
 import datetime
-import realGameAI as realAI
+import realGameAI as realgameAI
+import argparse
 
 letter_codes = [ord(ch) for ch in 'WASDRQHwasdrqh']
 actions = ['Up', 'Left', 'Down', 'Right', 'Restart', 'Exit','Hint']
@@ -16,9 +17,6 @@ def get_user_action(keyboard):
     while char not in actions_dict:    
         char = keyboard.getch()
     return actions_dict[char]
-
-def get_ai_action(field):
-    return gameai.takeAction(field)
 
 def transpose(field):
     return [list(row) for row in zip(*field)]
@@ -35,6 +33,10 @@ class GameField(object):
         self.highscore = 0
         self.reset()
         self.flag = False
+        if height==4 and width ==4:
+            self.ai = realgameAI.AIagent()
+        else:
+            self.ai = gameAI.QLearning()
 
     def reset(self):
         if self.score > self.highscore:
@@ -132,7 +134,7 @@ class GameField(object):
 
         if self.flag:
             self.flag = False
-            hint_action = realAI.makeMove(self.field)
+            hint_action = self.ai.makeMove(self.field)
             cast(hint_string+hint_action)
 
     def spawn(self):
@@ -210,10 +212,16 @@ def main(stdscr):
             'Gameover': lambda: not_game('Gameover'),
             'Game': game
     }
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--real", help="set the game to be authentic 2048 game, instead of game of 2*2 field",action="store_true")
+    args = parser.parse_args()
 
     curses.use_default_colors()
-    game_field = GameField()
 
+    if args.real:
+        game_field = GameField(win=2048)
+    else:
+        game_field = GameField(height=2, width=2, win=32)
     state = 'Init'
 
     #状态机开始循环

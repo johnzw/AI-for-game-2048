@@ -2,7 +2,7 @@ import GameAgent2
 actionTranslate = ['Up', 'Left', 'Down', 'Right']
 
 agent = GameAgent2.GameField()
-discount = 0.95
+discount = 0.95		
 def explore(field, level):
 	if level == 1:
 		record = []
@@ -35,14 +35,18 @@ def explore(field, level):
 			record.append(value)
 		return max(enumerate(record),key=lambda x:x[1])
 
-def makeMove(field):
-	bestSolution = explore(field,6)
-	move = actionTranslate[bestSolution[0]]
-	return move
+class AIagent(object):
+	def makeMove(self, field):
+		bestSolution = explore(field,6)
+		move = actionTranslate[bestSolution[0]]
+		return move
 
-sample = [[0,0,0,0],
+if __name__ == '__main__':
+	sample = [[0,0,0,0],
 		  [0,2,0,4],
 		  [2,0,0,0],
 		  [2,0,0,0]]
+	agent = AIagent()
+	print agent.makeMove(sample)
 
-print makeMove(sample)
+	print makeMove(sample)
