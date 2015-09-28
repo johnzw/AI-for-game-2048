@@ -69,10 +69,10 @@ if __name__ == '__main__':
 			print "result:",game.is_win(),"game score:",game.score,"highest score:",game.highscore
 
 		#do some stats
-		win_lose = [i[0] for i in records]
+		win_lose = [i[0] for i in record]
 		win_rate = win_lose.count(True)
-		avg_score = sum([i[1] for i in records]) / 500.0
-		avg_highscore = sum([i[2] for i in records]) / 500.0
+		avg_score = sum([i[1] for i in record]) / 500.0
+		avg_highscore = sum([i[2] for i in record]) / 500.0
 
 		sumup = {"record":record, "win_rate":win_rate, "avg_score":avg_score, "avg_highscore":avg_highscore}
 		print "sum up:",sumup
