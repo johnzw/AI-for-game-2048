@@ -30,7 +30,7 @@ you may not need any other user manual when entering into game, since as far as 
 * in 2048_automatic.py, once upon the game, AI engine takes control and make a move automatically *every second*. Basically you lose control of the game and there is nothing you can do but wait until one round of game ends. And then you can restart or quit the game.
 * in 2048_hint.py, users play the game themselves and see the hint provided by AI engine as they stuck on the game.
 
-the AI engine are based on array.data file in both files. Both games are powered by python package [curses](https://docs.python.org/3.3/howto/curses.html#user-input). And most of the code of the game part are referenced in [here](https://www.shiyanlou.com/courses/368)(it's online course website, you may have to sign up to check out more)
+the 2*2 AI engines is based on array.data file. The user-interaction part of the game is powered by python package [curses](https://docs.python.org/3.3/howto/curses.html#user-input). And most part of the code of the game are referenced in [here](https://www.shiyanlou.com/courses/368)(it's online course website, you may have to sign up to check out more)
 
 
 ####All in all, it is still in progress
