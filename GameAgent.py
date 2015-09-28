@@ -21,9 +21,8 @@ class GameField(object):
         self.reset()
 
     def reset(self):
-        if self.score > self.highscore:
-            self.highscore = self.score
-        self.original
+        self.highscore = 0
+        self.original = 0
         self.score = 0
         self.field = [[0 for i in range(self.width)] for j in range(self.height)]
         self.spawn()
@@ -43,6 +42,8 @@ class GameField(object):
                     if pair:
                         new_row.append(2 * row[i])
                         self.score += 2 * row[i]
+                        if 2 * row[i] > self.highscore:
+                            self.highscore = 2 * row[i]
                         pair = False
                     else:
                         if i + 1 < len(row) and row[i] == row[i + 1]:

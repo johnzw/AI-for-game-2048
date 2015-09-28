@@ -1,4 +1,7 @@
 import GameAgent2
+import GameAgent
+import json
+from random import choice
 actionTranslate = ['Up', 'Left', 'Down', 'Right']
 
 agent = GameAgent2.GameField()
@@ -41,12 +44,41 @@ class AIagent(object):
 		move = actionTranslate[bestSolution[0]]
 		return move
 
-if __name__ == '__main__':
-	sample = [[0,0,0,0],
-		  [0,2,0,4],
-		  [2,0,0,0],
-		  [2,0,0,0]]
-	agent = AIagent()
-	print agent.makeMove(sample)
+	def makeMoveOnLevel(self, field, level):
+		bestSolution = explore(field,level)
+		move = actionTranslate[bestSolution[0]]
+		return move
 
-	print makeMove(sample)
+if __name__ == '__main__':
+	game = GameAgent.GameField(height=4, width=4, win=2048)
+	ai = AIagent()
+
+	for level in range(2,9):
+
+		record = []
+		for times in range(500):
+			game.reset()
+			while (not game.is_win()) and (not game.is_gameover()):
+				action = ai.makeMoveOnLevel(game.field, level)
+				while not game.move(action):
+					#it would have some unfeasible action, especilly when lv is small
+					action = choice(actionTranslate)
+			
+			#take the record
+			record.append((game.is_win(),game.score,game.highscore))
+			print "result:",game.is_win(),"game score:",game.score,"highest score:",game.highscore
+
+		#do some stats
+		win_lose = [i[0] for i in records]
+		win_rate = win_lose.count(True)
+		avg_score = sum([i[1] for i in records]) / 500.0
+		avg_highscore = sum([i[2] for i in records]) / 500.0
+
+		sumup = {"record":record, "win_rate":win_rate, "avg_score":avg_score, "avg_highscore":avg_highscore}
+		print "sum up:",sumup
+
+		#write to file
+		with open("level|"+level,"w") as f:
+			json.dump(sumup,f)
+
+
