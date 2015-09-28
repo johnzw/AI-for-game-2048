@@ -78,7 +78,7 @@ if __name__ == '__main__':
 		print "sum up:",sumup
 
 		#write to file
-		with open("level|"+level,"w") as f:
+		with open("level|"+str(level),"w") as f:
 			json.dump(sumup,f)
 
 
