@@ -35,9 +35,9 @@ the 2*2 AI engines is based on array.data file. The user-interaction part of the
 ###test on current 2048 AI in RL-ish but definitely not RL algorithm
 After running realGameAI.py for hours, I have collected some data to evaluate the performance of different exploring levels ranging from 2 to 8. And here they are.
 
-![win_ratio][/record/win_rate.png]
-![avg_score][/record/avg_score.png]
-![avg_highscore][/record/avg_highscore.png]
+![win_ratio](/record/win_rate.png)
+![avg_score](/record/avg_score.png)
+![avg_highscore](/record/avg_highscore.png)
 
 Due to the unacceptable low speed of the algorithm with exporing level more than 9, I can only test the AI with exploring level as shown above. But all these exporing level with satifying running speed yield really unstatifying performance. There is no one winning more than 50%. And this is nothing but bad.
 
