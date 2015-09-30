@@ -53,10 +53,10 @@ if __name__ == '__main__':
 	game = GameAgent.GameField(height=4, width=4, win=2048)
 	ai = AIagent()
 
-	for level in range(2,9):
+	for level in range(7,9):
 
 		record = []
-		for times in range(500):
+		for times in range(50):
 			game.reset()
 			while (not game.is_win()) and (not game.is_gameover()):
 				action = ai.makeMoveOnLevel(game.field, level)
@@ -71,8 +71,8 @@ if __name__ == '__main__':
 		#do some stats
 		win_lose = [i[0] for i in record]
 		win_rate = win_lose.count(True)
-		avg_score = sum([i[1] for i in record]) / 500.0
-		avg_highscore = sum([i[2] for i in record]) / 500.0
+		avg_score = sum([i[1] for i in record]) / 50.0
+		avg_highscore = sum([i[2] for i in record]) / 50.0
 
 		sumup = {"record":record, "win_rate":win_rate, "avg_score":avg_score, "avg_highscore":avg_highscore}
 		print "sum up:",sumup
