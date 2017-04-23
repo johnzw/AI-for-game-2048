@@ -1,7 +1,7 @@
 # RL-AI for game 2048
 It uses reinforcement learning to play game 2048
 
-###update
+### update
 Now, user can literally play game 2048 with AI, but it is not powered by reinforcement learning though. Still figure out how RL can apply to this.
 
 ### Disclaimer
@@ -24,7 +24,7 @@ Right now it has its own data.array file, a [pickle](https://docs.python.org/2/l
 You are encouraged to use other settings. you may have to run `python LearningProc.py --help` to see further details about all the possible parameters.
 **warning**: you may need a little patience becuase running this file might take a while, especilly when you set the Learning Times to large, say, a million.
 
-###About 2048_automatic.py and 2048_hint.py
+### About 2048_automatic.py and 2048_hint.py
 you can simply run both files without any further arguments: `python 2048_automatic.py` or `python 2048_hint.py`. And it plays 2*2 game powered by RL-AI for you. And if you play authentic 2048 game, you can type `python 2048_automatic.py --real` or `python 2048_hint.py --real`
 you may not need any other user manual when entering into game, since as far as I see it the game per se is quite self-explanatory. And as name of both files implies, the differences between them are:
 * in 2048_automatic.py, once upon the game, AI engine takes control and make a move automatically *every second*. Basically you lose control of the game and there is nothing you can do but wait until one round of game ends. And then you can restart or quit the game.
@@ -32,7 +32,7 @@ you may not need any other user manual when entering into game, since as far as 
 
 the 2*2 AI engines is based on array.data file. The user-interaction part of the game is powered by python package [curses](https://docs.python.org/3.3/howto/curses.html#user-input). And most part of the code of the game are referenced in [here](https://www.shiyanlou.com/courses/368)(it's online course website, you may have to sign up to check out more)
 
-###test on current 2048 AI in RL-ish but definitely not RL algorithm
+### test on current 2048 AI in RL-ish but definitely not RL algorithm
 After running realGameAI.py for hours, I have collected some data to evaluate the performance of different exploring levels ranging from 2 to 8. And here they are.
 
 ![win_ratio](/record/win_rate.png)
@@ -43,7 +43,7 @@ Due to the unacceptable low speed of the algorithm with exporing level more than
 
 But one interesting phenomena is that the performance seems reach highest at the level 6 with respect to the range of 2 to 8. And this is counter intuitive to me because AI should have been smarter when exploring deeper of the game state. well, it looks that there is some myth over here.
 
-####All in all, it is still in progress
+#### All in all, it is still in progress
 
-###Reference
+### Reference
 https://www.shiyanlou.com/courses/368
